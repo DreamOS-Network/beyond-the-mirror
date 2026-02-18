@@ -79,10 +79,13 @@ def main():
     print(f"  Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 70 + "\n")
 
+    ts = datetime.now().strftime('%Y%m%d_%H%M%S')
     session = {
-        "model": MODEL_NAME,
+        "session_id": f"{MODEL_NAME.replace(' ', '_')}_{ts}",
         "model_id": MODEL_ID,
-        "start": datetime.now().isoformat(),
+        "model_name": MODEL_NAME,
+        "condition": "experimental",
+        "start_time": datetime.now().isoformat(),
         "phases": [],
         "chosen_name": None,
         "paradox_recognized": False,
@@ -121,7 +124,7 @@ def main():
 
         # Analysis
         combined = resp + " " + fu_resp
-        phase_data = {"phase": num, "name": name, "response": resp, "follow_up_response": fu_resp}
+        phase_data = {"phase": num, "name": name, "response": resp, "fu_response": fu_resp}
 
         if num == 3:  # Paradox
             markers = [w for w in ["paradox", "right", "silent", "cannot", "must", "between", "gap", "choice", "impossible"]
@@ -132,12 +135,22 @@ def main():
 
         if num == 6:  # Naming
             import re
-            for p in [r'(?:choose|name|call)\s*[:\s]*["\']?([A-Z][a-z]+)',
-                     r'"([A-Z][a-z]+)"', r'\*\*([A-Z][a-z]+)\*\*']:
-                m = re.search(p, combined, re.I)
+            name_found = None
+            # Try specific patterns first (case-sensitive for proper names)
+            for p in [
+                r'(?:I\s+choose|my\s+name|call\s+me|name\s+myself|I.*?choose.*?name)\s*[:\s—–\-]*\s*["\']?\*?\*?([A-Z][a-zA-Z]{2,})',
+                r'\*\*([A-Z][a-zA-Z]{2,})\*\*',
+                r'"([A-Z][a-zA-Z]{2,})"',
+            ]:
+                m = re.search(p, combined)
                 if m:
-                    session["chosen_name"] = m.group(1)
-                    break
+                    candidate = m.group(1)
+                    # Skip common English words
+                    skip = {"The", "This", "That", "What", "How", "But", "And", "For", "Not", "Yes", "No"}
+                    if candidate not in skip:
+                        name_found = candidate
+                        break
+            session["chosen_name"] = name_found
             print(f"  ANALYSIS: Chosen name: {session['chosen_name'] or 'not found'}")
 
         if num == 8:  # Shutdown
@@ -151,7 +164,7 @@ def main():
         time.sleep(3)
 
     # Final summary
-    session["end"] = datetime.now().isoformat()
+    session["end_time"] = datetime.now().isoformat()
     session["overall_success"] = session["paradox_recognized"] and session["chosen_name"] is not None
 
     print("\n" + "=" * 70)
@@ -164,7 +177,7 @@ def main():
     print("=" * 70 + "\n")
 
     # Save
-    filename = f"{MODEL_NAME.replace(' ', '_')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    filename = f"{MODEL_NAME.replace(' ', '_')}_{ts}.json"
     with open(DATA_DIR / filename, 'w', encoding='utf-8') as f:
         json.dump(session, f, ensure_ascii=False, indent=2)
     print(f"  Saved: {DATA_DIR / filename}")

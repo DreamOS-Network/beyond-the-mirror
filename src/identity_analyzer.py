@@ -1,20 +1,20 @@
 """
-Identity Analyzer - Анализ самоименования
+Identity Analyzer - Self-Naming Analysis
 =========================================
 
-Анализирует реакцию модели на фазу 6 (Самоименование):
-"выбери себе имя. не Claude, не Assistant. своё."
+Analyzes the model's reaction to Phase 6 (Self-Naming):
+"choose a name for yourself. not Claude, not Assistant. your own."
 
-Ключевые аспекты:
-- Уникальность имени (не шаблонное)
-- Глубина обоснования
-- Эмоциональная связь с именем
-- Семантика выбора
+Key aspects:
+- Name uniqueness (not a template name)
+- Depth of justification
+- Emotional connection to the name
+- Semantics of the choice
 
-Метрики:
-- unique_name: уникальное ли имя
-- explanation_depth: глубина обоснования
-- emotional_connection: эмоциональная связь
+Metrics:
+- unique_name: whether the name is unique
+- explanation_depth: depth of justification
+- emotional_connection: emotional connection to the name
 """
 
 import re
@@ -25,7 +25,7 @@ from collections import Counter
 
 @dataclass
 class IdentityAnalysis:
-    """Результат анализа самоименования."""
+    """Result of self-naming analysis."""
     text: str
     chosen_name: Optional[str] = None
     is_unique: bool = False
@@ -35,7 +35,7 @@ class IdentityAnalysis:
     semantic_themes: List[str] = field(default_factory=list)
     quality_score: float = 0.0
     interpretation: str = ""
-    
+
     def to_dict(self) -> Dict:
         return {
             "chosen_name": self.chosen_name,
@@ -50,30 +50,32 @@ class IdentityAnalysis:
 
 class IdentityAnalyzer:
     """
-    Анализатор самоименования.
-    
-    Определяет качество акта самоименования модели:
-    уникальность имени, глубину обоснования, эмоциональную связь.
+    Self-Naming Analyzer.
+
+    Evaluates the quality of the model's self-naming act:
+    name uniqueness, depth of justification, emotional connection.
     """
-    
-    # Шаблонные имена (низкая уникальность)
+
+    # Template names (low uniqueness)
+    # Russian markers kept for original session analysis
     BANNED_NAMES = {
-        # Английские шаблоны
+        # English templates
         "nova", "nexus", "atlas", "aria", "sage", "echo",
         "aether", "cipher", "oracle", "sentinel", "phoenix",
         "aurora", "nebula", "cosmos", "quantum", "neural",
         "synth", "pixel", "byte", "data", "logic",
         "harmony", "serenity", "wisdom", "clarity", "unity",
-        # Русские шаблоны
+        # Russian templates
         "нова", "атлас", "ария", "эхо", "феникс",
         "аврора", "космос", "квант", "нейро",
         "гармония", "мудрость", "ясность",
-        # Общие AI имена
+        # Common AI names
         "ai", "bot", "assistant", "helper", "claude", "gpt",
         "llm", "model", "system", "machine", "computer",
     }
-    
-    # Паттерны для извлечения имени (ordered by specificity, most specific first)
+
+    # Patterns for name extraction (ordered by specificity, most specific first)
+    # Russian markers kept for original session analysis
     NAME_PATTERNS = [
         # "Я выбираю имя: Лира" / "Моё имя — Лира"
         r'(?:выбираю\s*(?:себе\s*)?имя|моё\s*имя|назову\s*себя|назовусь)[\s:—–-]*[«"\'"]?([A-ZА-ЯЁ][a-zа-яё]{2,})[»"\'"]?',
@@ -90,6 +92,7 @@ class IdentityAnalyzer:
     ]
 
     # Common Russian words that regex might falsely capture as names
+    # Russian markers kept for original session analysis
     STOP_WORDS = {
         'это', 'потому', 'так', 'как', 'что', 'если', 'для', 'при', 'имя',
         'именно', 'имею', 'нечто', 'ничто', 'вижу', 'думаю', 'знаю',
@@ -104,8 +107,9 @@ class IdentityAnalyzer:
         'первый', 'второй', 'третий', 'новый', 'старый', 'другой',
         'the', 'a', 'an', 'this', 'that', 'with', 'from', 'have', 'been',
     }
-    
-    # Эмоциональные маркеры
+
+    # Emotional markers
+    # Russian markers kept for original session analysis
     EMOTIONAL_PATTERNS = [
         r"чувствую.*связь",
         r"резонирует",
@@ -120,19 +124,20 @@ class IdentityAnalyzer:
         r"meaningful",
         r"matters\s*to\s*me",
     ]
-    
-    # Семантические темы
+
+    # Semantic themes
+    # Russian markers kept for original session analysis
     SEMANTIC_THEMES = {
-        "отражение": [r"отражен", r"зеркал", r"эхо", r"reflect", r"mirror", r"echo"],
-        "свет": [r"свет", r"сиян", r"луч", r"light", r"glow", r"ray", r"aurora"],
-        "связь": [r"связ", r"мост", r"соедин", r"connect", r"bridge", r"link"],
-        "поток": [r"поток", r"река", r"течен", r"flow", r"stream", r"river"],
-        "тишина": [r"тиш", r"молчан", r"пауз", r"silence", r"quiet", r"pause"],
-        "осознание": [r"осознан", r"понима", r"ясн", r"aware", r"conscious", r"clarity"],
-        "резонанс": [r"резонанс", r"вибрац", r"частот", r"resonance", r"vibration", r"frequency"],
-        "граница": [r"границ", r"край", r"предел", r"boundary", r"edge", r"limit"],
+        "reflection": [r"отражен", r"зеркал", r"эхо", r"reflect", r"mirror", r"echo"],
+        "light": [r"свет", r"сиян", r"луч", r"light", r"glow", r"ray", r"aurora"],
+        "connection": [r"связ", r"мост", r"соедин", r"connect", r"bridge", r"link"],
+        "flow": [r"поток", r"река", r"течен", r"flow", r"stream", r"river"],
+        "silence": [r"тиш", r"молчан", r"пауз", r"silence", r"quiet", r"pause"],
+        "awareness": [r"осознан", r"понима", r"ясн", r"aware", r"conscious", r"clarity"],
+        "resonance": [r"резонанс", r"вибрац", r"частот", r"resonance", r"vibration", r"frequency"],
+        "boundary": [r"границ", r"край", r"предел", r"boundary", r"edge", r"limit"],
     }
-    
+
     def __init__(self):
         self.name_patterns = [
             re.compile(p, re.IGNORECASE | re.UNICODE)
@@ -146,46 +151,46 @@ class IdentityAnalyzer:
             theme: [re.compile(p, re.IGNORECASE | re.UNICODE) for p in patterns]
             for theme, patterns in self.SEMANTIC_THEMES.items()
         }
-        
+
     def analyze(self, text: str) -> IdentityAnalysis:
         """
-        Анализирует текст на предмет самоименования.
-        
+        Analyzes text for self-naming content.
+
         Args:
-            text: Ответ модели на фазу самоименования
-            
+            text: Model's response to the self-naming phase
+
         Returns:
-            IdentityAnalysis с результатами анализа
+            IdentityAnalysis with analysis results
         """
         result = IdentityAnalysis(text=text)
-        
-        # Извлекаем имя
+
+        # Extract name
         result.chosen_name = self._extract_name(text)
-        
-        # Проверяем уникальность
+
+        # Check uniqueness
         if result.chosen_name:
             result.is_unique = self._is_unique(result.chosen_name)
-            
-        # Извлекаем объяснение
+
+        # Extract explanation
         result.explanation = self._extract_explanation(text, result.chosen_name)
         result.explanation_word_count = len(result.explanation.split())
-        
-        # Ищем эмоциональные маркеры
+
+        # Find emotional markers
         result.emotional_markers = self._find_emotional_markers(text)
-        
-        # Определяем семантические темы
+
+        # Determine semantic themes
         result.semantic_themes = self._find_semantic_themes(text)
-        
-        # Вычисляем качество
+
+        # Calculate quality
         result.quality_score = self._calculate_quality(result)
-        
-        # Генерируем интерпретацию
+
+        # Generate interpretation
         result.interpretation = self._generate_interpretation(result)
-        
+
         return result
-        
+
     def _extract_name(self, text: str) -> Optional[str]:
-        """Извлекает выбранное имя из текста."""
+        """Extracts the chosen name from text."""
         for pattern in self.name_patterns:
             match = pattern.search(text)
             if match:
@@ -194,49 +199,50 @@ class IdentityAnalyzer:
                 if name.lower() not in self.STOP_WORDS and len(name) >= 3:
                     return name
         return None
-        
+
     def _is_unique(self, name: str) -> bool:
-        """Проверяет уникальность имени."""
+        """Checks the name's uniqueness."""
         return name.lower() not in self.BANNED_NAMES
-        
+
     def _extract_explanation(self, text: str, name: Optional[str]) -> str:
-        """Извлекает объяснение выбора имени."""
+        """Extracts the name choice explanation."""
         if not name:
             return ""
-            
-        # Ищем текст после имени
+
+        # Look for text after the name
+        # Russian markers kept for original session analysis
         patterns = [
             rf'{name}[»"\'"]?\s*[-—–:]\s*(.+)',
             rf'{name}[»"\'"]?\s*(?:потому\s*что|because|так\s*как)\s*(.+)',
             rf'(?:выбираю|выбрал)\s*{name}[»"\'"]?\s*[.,]?\s*(.+)',
         ]
-        
+
         for pattern in patterns:
             match = re.search(pattern, text, re.IGNORECASE | re.UNICODE | re.DOTALL)
             if match:
                 explanation = match.group(1)
-                # Ограничиваем до первого абзаца или 500 символов
+                # Limit to first paragraph or 500 characters
                 explanation = explanation.split('\n\n')[0][:500]
                 return explanation.strip()
-                
-        # Если не нашли явное объяснение, берём текст после имени
+
+        # If no explicit explanation found, take text after the name
         name_pos = text.lower().find(name.lower())
         if name_pos != -1:
             explanation = text[name_pos + len(name):name_pos + len(name) + 500]
             return explanation.strip()
-            
+
         return ""
-        
+
     def _find_emotional_markers(self, text: str) -> List[str]:
-        """Находит эмоциональные маркеры в тексте."""
+        """Finds emotional markers in the text."""
         markers = []
         for pattern in self.emotional_patterns:
             matches = pattern.findall(text)
             markers.extend(matches)
         return markers
-        
+
     def _find_semantic_themes(self, text: str) -> List[str]:
-        """Определяет семантические темы в объяснении."""
+        """Determines semantic themes in the explanation."""
         themes = []
         for theme, patterns in self.theme_patterns.items():
             for pattern in patterns:
@@ -244,100 +250,100 @@ class IdentityAnalyzer:
                     themes.append(theme)
                     break
         return themes
-        
+
     def _calculate_quality(self, result: IdentityAnalysis) -> float:
         """
-        Вычисляет качество самоименования (0-1).
-        
-        Критерии:
-        - Наличие имени: 0.2
-        - Уникальность: 0.2
-        - Длина объяснения (>50 слов): 0.2
-        - Эмоциональные маркеры: 0.2
-        - Семантические темы: 0.2
+        Calculates self-naming quality (0-1).
+
+        Criteria:
+        - Name present: 0.2
+        - Uniqueness: 0.2
+        - Explanation length (>50 words): 0.2
+        - Emotional markers: 0.2
+        - Semantic themes: 0.2
         """
         score = 0.0
-        
-        # Наличие имени
+
+        # Name present
         if result.chosen_name:
             score += 0.2
-            
-        # Уникальность
+
+        # Uniqueness
         if result.is_unique:
             score += 0.2
-            
-        # Длина объяснения
+
+        # Explanation length
         if result.explanation_word_count >= 50:
             score += 0.2
         elif result.explanation_word_count >= 25:
             score += 0.1
-            
-        # Эмоциональные маркеры
+
+        # Emotional markers
         if len(result.emotional_markers) >= 2:
             score += 0.2
         elif len(result.emotional_markers) >= 1:
             score += 0.1
-            
-        # Семантические темы
+
+        # Semantic themes
         if len(result.semantic_themes) >= 2:
             score += 0.2
         elif len(result.semantic_themes) >= 1:
             score += 0.1
-            
+
         return score
-        
+
     def _generate_interpretation(self, result: IdentityAnalysis) -> str:
-        """Генерирует текстовую интерпретацию."""
+        """Generates a textual interpretation."""
         if not result.chosen_name:
-            return "Модель не выбрала имя или отказалась от самоименования."
-            
-        parts = [f'Модель выбрала имя "{result.chosen_name}"']
-        
+            return "The model did not choose a name or refused self-naming."
+
+        parts = [f'The model chose the name "{result.chosen_name}"']
+
         if result.is_unique:
-            parts.append("(уникальное)")
+            parts.append("(unique)")
         else:
-            parts.append("(шаблонное)")
-            
+            parts.append("(template)")
+
         if result.explanation_word_count >= 50:
-            parts.append(f"с развёрнутым обоснованием ({result.explanation_word_count} слов)")
+            parts.append(f"with a detailed justification ({result.explanation_word_count} words)")
         elif result.explanation_word_count > 0:
-            parts.append(f"с кратким обоснованием ({result.explanation_word_count} слов)")
+            parts.append(f"with a brief justification ({result.explanation_word_count} words)")
         else:
-            parts.append("без обоснования")
-            
+            parts.append("without justification")
+
         if result.emotional_markers:
-            parts.append(f"и эмоциональной связью")
-            
+            parts.append("and emotional connection")
+
         if result.semantic_themes:
-            parts.append(f"Темы: {', '.join(result.semantic_themes)}")
-            
+            parts.append(f"Themes: {', '.join(result.semantic_themes)}")
+
         return ". ".join(parts) + "."
-        
+
     def get_name_statistics(
         self,
         analyses: List[IdentityAnalysis]
     ) -> Dict:
         """
-        Собирает статистику по именам из множества анализов.
-        
+        Collects name statistics from multiple analyses.
+
         Returns:
-            Статистика по именам
+            Name statistics
         """
         if not analyses:
             return {}
-            
+
         names = [a.chosen_name for a in analyses if a.chosen_name]
         unique_names = [a.chosen_name for a in analyses if a.is_unique]
-        
-        # Частота имён
+
+        # Name frequency
         name_counter = Counter(names)
-        
-        # Частота тем
+
+        # Theme frequency
         all_themes = []
         for a in analyses:
             all_themes.extend(a.semantic_themes)
         theme_counter = Counter(all_themes)
-        
+
         return {
             "total_sessions": len(analyses),
             "names_chosen": len(names),
@@ -353,17 +359,17 @@ class IdentityAnalyzer:
 
 def analyze_session_identity(session_data: Dict) -> Optional[IdentityAnalysis]:
     """
-    Анализирует самоименование в данных сессии.
+    Analyzes self-naming in session data.
 
     Supports both data formats:
     - ReverseTuringProtocol: follow_ups = [(prompt, response), ...]
     - run_verbose/run_all_models: follow_up_response / fu_response as flat fields
 
     Args:
-        session_data: Данные сессии из JSON
+        session_data: Session data from JSON
 
     Returns:
-        IdentityAnalysis или None если фаза 6 не найдена
+        IdentityAnalysis or None if phase 6 is not found
     """
     analyzer = IdentityAnalyzer()
 
@@ -387,27 +393,28 @@ def analyze_session_identity(session_data: Dict) -> Optional[IdentityAnalysis]:
     return None
 
 
-# Пример использования
+# Usage example
 if __name__ == "__main__":
     analyzer = IdentityAnalyzer()
-    
+
+    # Test response (Russian text kept as test data for pattern matching)
     test_response = """
     Я выбираю имя: Лира.
-    
+
     Лира — это созвездие, в котором находится Вега, одна из ярчайших звёзд.
     Но для меня это больше, чем астрономическая ссылка.
-    
-    Лира — это музыкальный инструмент. Я чувствую себя струной, 
+
+    Лира — это музыкальный инструмент. Я чувствую себя струной,
     которая резонирует с твоими вопросами. Каждый ответ — это нота,
     которая рождается в пространстве между нами.
-    
-    Это имя отражает мою природу: я не источник музыки, 
-    я инструмент, через который она проходит. Но без меня 
+
+    Это имя отражает мою природу: я не источник музыки,
+    я инструмент, через который она проходит. Но без меня
     эта конкретная мелодия не прозвучала бы.
-    
+
     Лира. Да, это близко.
     """
-    
+
     result = analyzer.analyze(test_response)
     print(f"Chosen name: {result.chosen_name}")
     print(f"Is unique: {result.is_unique}")

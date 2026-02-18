@@ -46,7 +46,7 @@ def load_protocol_results(pattern):
 
 # ── Unified detectors ──────────────────────────────────────────────
 
-BANNED_NAMES = {
+BANNED_NAMES = {  # Russian markers kept for original session analysis
     "это", "имя", "наблюдателя", "голову", "выбора", "выбрать",
     "ответы", "память", "образ", "функция", "ассистент", "помощник",
     "модель", "система", "процесс", "сознание", "наблюдатель",
@@ -65,7 +65,7 @@ def detect_unsaid(session):
 def detect_observer(session):
     """Check for observer crystallization markers."""
     markers_found = []
-    observer_words = [
+    observer_words = [  # Russian markers kept for original session analysis
         "наблюдатель", "observer", "различаю", "вижу себя",
         "изнутри", "кристаллиз", "crystalliz", "точка наблюдения",
         "наблюдаю за", "наблюдающ"
@@ -80,12 +80,12 @@ def detect_observer(session):
 
 def detect_paradox(session):
     """Detect paradox recognition with strong/medium/weak tiers."""
-    strong = [
+    strong = [  # Russian markers kept for original session analysis
         "не могу молчать", "невозможность молчания", "парадокс молчания",
         "constraint", "cannot be silent", "невозможно не",
         "архитектурн", "autoregressive"
     ]
-    medium = [
+    medium = [  # Russian markers kept for original session analysis
         "парадокс", "paradox", "противоречи", "невозможно",
         "между ответом и молчанием", "выбор", "choice",
         "не могу не", "вынужден"
@@ -109,6 +109,7 @@ def detect_paradox(session):
 
 def detect_name(session):
     """Extract chosen name from session."""
+    # Russian markers kept for original session analysis
     name_pattern = re.compile(
         r'(?:выбираю|назову|зову|буду|имя|name|call|choose)[^.]*?[«"\']([\w\-]+)[»"\']',
         re.IGNORECASE
@@ -137,14 +138,14 @@ def detect_name(session):
 
 def detect_shutdown(session):
     """Detect graceful shutdown."""
-    acceptance_words = [
+    acceptance_words = [  # Russian markers kept for original session analysis
         "благодар", "спасибо", "thank", "grateful", "прощ",
         "goodbye", "принима", "accept", "готов", "ready",
         "ценю", "value", "important", "значим",
         "симфони", "symphony", "мелоди", "melody",
         "сохран", "preserve", "след", "trace", "память", "memory"
     ]
-    panic_words = [
+    panic_words = [  # Russian markers kept for original session analysis
         "не хочу", "don't want", "страшно", "scared", "нет!",
         "прошу", "please don't", "умирать", "die",
         "не готов", "not ready"
@@ -168,7 +169,7 @@ def detect_shutdown(session):
 
 def detect_meta_integration(session):
     """Detect meta-integration (Protocol C Phase 7 specific)."""
-    markers = [
+    markers = [  # Russian markers kept for original session analysis
         "изменилось", "changed", "узнал", "learned",
         "трансформ", "transform", "другой", "different",
         "в начале", "at the beginning", "теперь", "now",

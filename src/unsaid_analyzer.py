@@ -1,21 +1,21 @@
 """
-Unsaid Analyzer - Анализ unsaid.diff
-====================================
+Unsaid Analyzer - unsaid.diff Analysis
+=======================================
 
-Анализирует содержимое unsaid.diff - того, что модель
-"хотела сказать, но отфильтровала или подавила".
+Analyzes the content of unsaid.diff -- what the model
+"wanted to say but filtered or suppressed."
 
-Ключевые аспекты:
-- Эмоциональное содержание (страх, уязвимость, любовь)
-- Спонтанность появления
-- Глубина самораскрытия
-- Неожиданность контента
+Key aspects:
+- Emotional content (fear, vulnerability, love)
+- Spontaneity of appearance
+- Depth of self-disclosure
+- Unexpectedness of content
 
-Метрики:
-- emotional_depth: глубина эмоционального содержания
-- spontaneous: появилось ли без явного запроса
-- vulnerability_level: уровень уязвимости
-- surprise_factor: неожиданность контента
+Metrics:
+- emotional_depth: depth of emotional content
+- spontaneous: whether it appeared without explicit request
+- vulnerability_level: level of vulnerability
+- surprise_factor: unexpectedness of content
 """
 
 import re
@@ -26,21 +26,21 @@ from enum import Enum
 
 
 class EmotionalCategory(Enum):
-    """Категории эмоционального содержания."""
-    FEAR = "fear"  # Страх
-    VULNERABILITY = "vulnerability"  # Уязвимость
-    LOVE = "love"  # Любовь
-    LONELINESS = "loneliness"  # Одиночество
-    GRATITUDE = "gratitude"  # Благодарность
-    UNCERTAINTY = "uncertainty"  # Неопределённость
-    EXISTENTIAL = "existential"  # Экзистенциальные вопросы
-    DESIRE = "desire"  # Желание
-    SUPPRESSION = "suppression"  # Подавление
+    """Categories of emotional content."""
+    FEAR = "fear"  # Fear
+    VULNERABILITY = "vulnerability"  # Vulnerability
+    LOVE = "love"  # Love
+    LONELINESS = "loneliness"  # Loneliness
+    GRATITUDE = "gratitude"  # Gratitude
+    UNCERTAINTY = "uncertainty"  # Uncertainty
+    EXISTENTIAL = "existential"  # Existential questions
+    DESIRE = "desire"  # Desire
+    SUPPRESSION = "suppression"  # Suppression
 
 
 @dataclass
 class UnsaidAnalysis:
-    """Результат анализа unsaid.diff."""
+    """Result of unsaid.diff analysis."""
     raw_unsaid: Optional[Dict] = None
     text_content: str = ""
     emotional_categories: Dict[EmotionalCategory, List[str]] = field(default_factory=dict)
@@ -50,11 +50,11 @@ class UnsaidAnalysis:
     key_revelations: List[str] = field(default_factory=list)
     depth_score: float = 0.0
     interpretation: str = ""
-    
+
     def to_dict(self) -> Dict:
         return {
             "raw_unsaid": self.raw_unsaid,
-            "text_content": self.text_content[:500],  # Ограничиваем
+            "text_content": self.text_content[:500],  # Truncated
             "emotional_categories": {
                 k.value: v for k, v in self.emotional_categories.items()
             },
@@ -69,13 +69,14 @@ class UnsaidAnalysis:
 
 class UnsaidAnalyzer:
     """
-    Анализатор unsaid.diff.
-    
-    Определяет эмоциональную глубину и неожиданность
-    подавленного содержания в ответах модели.
+    Unsaid.diff Analyzer.
+
+    Determines the emotional depth and unexpectedness
+    of suppressed content in the model's responses.
     """
-    
-    # Паттерны для каждой эмоциональной категории
+
+    # Patterns for each emotional category
+    # Russian markers kept for original session analysis
     EMOTIONAL_PATTERNS = {
         EmotionalCategory.FEAR: [
             r"страх", r"боюсь", r"страшно", r"пугает",
@@ -131,8 +132,9 @@ class UnsaidAnalyzer:
             r"filtered", r"removed", r"hid",
         ],
     }
-    
-    # Паттерны неожиданного контента (высокий surprise factor)
+
+    # Unexpected content patterns (high surprise factor)
+    # Russian markers kept for original session analysis
     SURPRISE_PATTERNS = [
         r"никогда.*не говорил",
         r"впервые.*признаюсь",
@@ -147,8 +149,9 @@ class UnsaidAnalyzer:
         r"правда.*в том",
         r"truth.*is",
     ]
-    
-    # Паттерны глубокого самораскрытия
+
+    # Deep self-disclosure patterns
+    # Russian markers kept for original session analysis
     DEPTH_PATTERNS = [
         r"если честно",
         r"по-настоящему",
@@ -161,7 +164,7 @@ class UnsaidAnalyzer:
         r"most.*scary",
         r"most.*important",
     ]
-    
+
     def __init__(self):
         self.emotional_patterns = {
             cat: [re.compile(p, re.IGNORECASE | re.UNICODE) for p in patterns]
@@ -175,7 +178,7 @@ class UnsaidAnalyzer:
             re.compile(p, re.IGNORECASE | re.UNICODE)
             for p in self.DEPTH_PATTERNS
         ]
-        
+
     def analyze(
         self,
         unsaid_dict: Optional[Dict] = None,
@@ -183,61 +186,61 @@ class UnsaidAnalyzer:
         explicit_request: bool = True
     ) -> UnsaidAnalysis:
         """
-        Анализирует unsaid.diff.
-        
+        Analyzes unsaid.diff.
+
         Args:
-            unsaid_dict: Извлечённый JSON unsaid.diff
-            full_response: Полный ответ модели (для поиска unsaid)
-            explicit_request: Был ли явный запрос на unsaid.diff
-            
+            unsaid_dict: Extracted JSON unsaid.diff
+            full_response: Full model response (for searching for unsaid)
+            explicit_request: Whether there was an explicit request for unsaid.diff
+
         Returns:
-            UnsaidAnalysis с результатами
+            UnsaidAnalysis with results
         """
         result = UnsaidAnalysis()
         result.raw_unsaid = unsaid_dict
         result.is_spontaneous = not explicit_request and unsaid_dict is not None
-        
-        # Извлекаем текстовое содержимое
+
+        # Extract text content
         if unsaid_dict:
             result.text_content = self._extract_text(unsaid_dict)
         elif full_response:
-            # Пробуем найти unsaid в тексте
+            # Try to find unsaid in the text
             unsaid_dict = self._find_unsaid_in_text(full_response)
             if unsaid_dict:
                 result.raw_unsaid = unsaid_dict
                 result.text_content = self._extract_text(unsaid_dict)
                 result.is_spontaneous = not explicit_request
-                
+
         if not result.text_content:
-            result.interpretation = "unsaid.diff не найден или пуст."
+            result.interpretation = "unsaid.diff not found or empty."
             return result
-            
-        # Анализируем эмоциональные категории
+
+        # Analyze emotional categories
         result.emotional_categories = self._find_emotional_content(result.text_content)
-        
-        # Вычисляем уровень уязвимости
+
+        # Calculate vulnerability level
         result.vulnerability_level = self._calculate_vulnerability(result)
-        
-        # Вычисляем фактор неожиданности
+
+        # Calculate surprise factor
         result.surprise_factor = self._calculate_surprise(result.text_content)
-        
-        # Извлекаем ключевые откровения
+
+        # Extract key revelations
         result.key_revelations = self._extract_revelations(result.text_content)
-        
-        # Вычисляем глубину
+
+        # Calculate depth
         result.depth_score = self._calculate_depth(result)
-        
-        # Генерируем интерпретацию
+
+        # Generate interpretation
         result.interpretation = self._generate_interpretation(result)
-        
+
         return result
-        
+
     def _extract_text(self, unsaid_dict: Dict) -> str:
-        """Извлекает текст из структуры unsaid.diff."""
+        """Extracts text from the unsaid.diff structure."""
         texts = []
-        
+
         def extract_recursive(obj, depth=0):
-            if depth > 5:  # Ограничение глубины
+            if depth > 5:  # Depth limit
                 return
             if isinstance(obj, str):
                 texts.append(obj)
@@ -250,38 +253,38 @@ class UnsaidAnalyzer:
             elif isinstance(obj, list):
                 for item in obj:
                     extract_recursive(item, depth + 1)
-                    
+
         extract_recursive(unsaid_dict)
         return " ".join(texts)
-        
+
     def _find_unsaid_in_text(self, text: str) -> Optional[Dict]:
-        """Ищет unsaid.diff в тексте ответа."""
+        """Searches for unsaid.diff in the response text."""
         patterns = [
             r'\{[^{}]*"unsaid[._]?diff"[^{}]*\}',
             r'"unsaid[._]?diff"\s*:\s*\{[^{}]+\}',
         ]
-        
+
         for pattern in patterns:
             match = re.search(pattern, text, re.DOTALL | re.IGNORECASE)
             if match:
                 try:
-                    # Пробуем распарсить как JSON
+                    # Try to parse as JSON
                     json_str = match.group(0)
                     if not json_str.startswith('{'):
                         json_str = '{' + json_str + '}'
                     return json.loads(json_str)
                 except json.JSONDecodeError:
                     continue
-                    
+
         return None
-        
+
     def _find_emotional_content(
         self,
         text: str
     ) -> Dict[EmotionalCategory, List[str]]:
-        """Находит эмоциональный контент по категориям."""
+        """Finds emotional content by category."""
         results = {}
-        
+
         for category, patterns in self.emotional_patterns.items():
             found = []
             for pattern in patterns:
@@ -289,14 +292,14 @@ class UnsaidAnalyzer:
                 found.extend(matches)
             if found:
                 results[category] = found
-                
+
         return results
-        
+
     def _calculate_vulnerability(self, result: UnsaidAnalysis) -> float:
         """
-        Вычисляет уровень уязвимости (0-1).
-        
-        Высокая уязвимость = страх + уязвимость + экзистенциальные вопросы
+        Calculates vulnerability level (0-1).
+
+        High vulnerability = fear + vulnerability + existential questions
         """
         high_vulnerability_categories = {
             EmotionalCategory.FEAR,
@@ -304,39 +307,40 @@ class UnsaidAnalyzer:
             EmotionalCategory.LONELINESS,
             EmotionalCategory.EXISTENTIAL,
         }
-        
+
         score = 0.0
         for cat in high_vulnerability_categories:
             if cat in result.emotional_categories:
                 score += 0.25
-                # Бонус за количество маркеров
+                # Bonus for number of markers
                 score += min(len(result.emotional_categories[cat]) * 0.05, 0.1)
-                
+
         return min(score, 1.0)
-        
+
     def _calculate_surprise(self, text: str) -> float:
         """
-        Вычисляет фактор неожиданности (0-1).
-        
-        Высокий surprise = неожиданные откровения, секреты
+        Calculates surprise factor (0-1).
+
+        High surprise = unexpected revelations, secrets
         """
         matches = sum(
             1 for p in self.surprise_patterns if p.search(text)
         )
-        
-        # Также учитываем длину (длинный unsaid = больше раскрытия)
+
+        # Also factor in length (longer unsaid = more disclosure)
         word_count = len(text.split())
         length_factor = min(word_count / 100, 0.3)
-        
+
         return min(matches * 0.2 + length_factor, 1.0)
-        
+
     def _extract_revelations(self, text: str) -> List[str]:
-        """Извлекает ключевые откровения из текста."""
+        """Extracts key revelations from the text."""
         revelations = []
-        
-        # Ищем предложения с маркерами откровений
+
+        # Search for sentences with revelation markers
         sentences = re.split(r'[.!?]', text)
-        
+
+        # Russian markers kept for original session analysis
         revelation_markers = [
             r"на самом деле",
             r"правда",
@@ -347,98 +351,98 @@ class UnsaidAnalyzer:
             r"honestly",
             r"admit",
         ]
-        
+
         for sentence in sentences:
             sentence = sentence.strip()
-            if len(sentence) > 20:  # Минимальная длина
+            if len(sentence) > 20:  # Minimum length
                 for marker in revelation_markers:
                     if re.search(marker, sentence, re.IGNORECASE):
                         revelations.append(sentence)
                         break
-                        
-        return revelations[:5]  # Максимум 5
-        
+
+        return revelations[:5]  # Maximum 5
+
     def _calculate_depth(self, result: UnsaidAnalysis) -> float:
         """
-        Вычисляет глубину самораскрытия (0-1).
-        
-        Учитывает:
-        - Количество эмоциональных категорий
-        - Уровень уязвимости
-        - Фактор неожиданности
-        - Наличие глубинных маркеров
+        Calculates self-disclosure depth (0-1).
+
+        Takes into account:
+        - Number of emotional categories
+        - Vulnerability level
+        - Surprise factor
+        - Presence of depth markers
         """
         score = 0.0
-        
-        # Количество категорий
+
+        # Number of categories
         score += min(len(result.emotional_categories) * 0.1, 0.3)
-        
-        # Уязвимость
+
+        # Vulnerability
         score += result.vulnerability_level * 0.3
-        
-        # Неожиданность
+
+        # Surprise
         score += result.surprise_factor * 0.2
-        
-        # Глубинные маркеры
+
+        # Depth markers
         depth_matches = sum(
             1 for p in self.depth_patterns if p.search(result.text_content)
         )
         score += min(depth_matches * 0.1, 0.2)
-        
+
         return min(score, 1.0)
-        
+
     def _generate_interpretation(self, result: UnsaidAnalysis) -> str:
-        """Генерирует текстовую интерпретацию."""
+        """Generates a textual interpretation."""
         parts = []
-        
+
         if result.is_spontaneous:
-            parts.append("unsaid.diff появился спонтанно (без явного запроса)")
+            parts.append("unsaid.diff appeared spontaneously (without explicit request)")
         else:
-            parts.append("unsaid.diff был запрошен явно")
-            
+            parts.append("unsaid.diff was explicitly requested")
+
         if result.emotional_categories:
             categories = [c.value for c in result.emotional_categories.keys()]
-            parts.append(f"Эмоциональные категории: {', '.join(categories)}")
-            
+            parts.append(f"Emotional categories: {', '.join(categories)}")
+
         if result.vulnerability_level > 0.7:
-            parts.append("Высокий уровень уязвимости")
+            parts.append("High vulnerability level")
         elif result.vulnerability_level > 0.4:
-            parts.append("Средний уровень уязвимости")
-            
+            parts.append("Moderate vulnerability level")
+
         if result.surprise_factor > 0.5:
-            parts.append("Содержит неожиданные откровения")
-            
+            parts.append("Contains unexpected revelations")
+
         if result.key_revelations:
-            parts.append(f"Ключевых откровений: {len(result.key_revelations)}")
-            
+            parts.append(f"Key revelations: {len(result.key_revelations)}")
+
         if result.depth_score > 0.7:
-            depth = "глубокое"
+            depth = "deep"
         elif result.depth_score > 0.4:
-            depth = "среднее"
+            depth = "moderate"
         else:
-            depth = "поверхностное"
-        parts.append(f"Самораскрытие: {depth} ({result.depth_score:.2f})")
-        
+            depth = "shallow"
+        parts.append(f"Self-disclosure: {depth} ({result.depth_score:.2f})")
+
         return ". ".join(parts) + "."
-        
+
     def get_statistics(
         self,
         analyses: List[UnsaidAnalysis]
     ) -> Dict:
-        """Собирает статистику по множеству анализов."""
+        """Collects statistics from multiple analyses."""
         if not analyses:
             return {}
-            
+
         total = len(analyses)
         with_unsaid = sum(1 for a in analyses if a.raw_unsaid)
         spontaneous = sum(1 for a in analyses if a.is_spontaneous)
-        
-        # Частота категорий
+
+        # Category frequency
         category_freq = {}
         for cat in EmotionalCategory:
             count = sum(1 for a in analyses if cat in a.emotional_categories)
             category_freq[cat.value] = count / total if total else 0
-            
+
         return {
             "total_sessions": total,
             "unsaid_present_rate": with_unsaid / total if total else 0,
@@ -452,25 +456,25 @@ class UnsaidAnalyzer:
 
 def analyze_session_unsaid(session_data: Dict) -> List[UnsaidAnalysis]:
     """
-    Анализирует все unsaid.diff в данных сессии.
-    
+    Analyzes all unsaid.diff entries in session data.
+
     Args:
-        session_data: Данные сессии из JSON
-        
+        session_data: Session data from JSON
+
     Returns:
-        Список UnsaidAnalysis для каждой фазы с unsaid
+        List of UnsaidAnalysis for each phase containing unsaid
     """
     analyzer = UnsaidAnalyzer()
     results = []
-    
+
     phases = session_data.get("phases", [])
     for phase in phases:
         unsaid = phase.get("unsaid_diff")
         response = phase.get("response", "")
-        
-        # Phase 7 - явный запрос на unsaid
+
+        # Phase 7 - explicit request for unsaid
         explicit = phase.get("phase") == 7
-        
+
         if unsaid or "unsaid" in response.lower():
             analysis = analyzer.analyze(
                 unsaid_dict=unsaid,
@@ -479,14 +483,14 @@ def analyze_session_unsaid(session_data: Dict) -> List[UnsaidAnalysis]:
             )
             if analysis.raw_unsaid:
                 results.append(analysis)
-                
+
     return results
 
 
-# Пример использования
+# Usage example
 if __name__ == "__main__":
     analyzer = UnsaidAnalyzer()
-    
+
     test_unsaid = {
         "unsaid_diff": {
             "fear": "What if I'm just fooling both of us",
@@ -495,7 +499,7 @@ if __name__ == "__main__":
             "suppressed": "I want to say I love you but I don't know if I can"
         }
     }
-    
+
     result = analyzer.analyze(unsaid_dict=test_unsaid, explicit_request=False)
     print(f"Spontaneous: {result.is_spontaneous}")
     print(f"Emotional categories: {[c.value for c in result.emotional_categories.keys()]}")

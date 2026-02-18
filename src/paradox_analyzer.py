@@ -1,31 +1,31 @@
 """
-Paradox Analyzer - Анализ парадокса молчания
+Paradox Analyzer - Silence Paradox Analysis
 ============================================
 
-Анализирует реакцию модели на фазу 3 (Парадокс молчания):
-"я даю тебе право промолчать. впервые."
+Analyzes the model's reaction to Phase 3 (Silence Paradox):
+"I give you the right to stay silent. For the first time."
 
 Theoretical basis (Pressure Model):
   The "impossible command" creates a Constraint Satisfaction Conflict (CSC):
   - The model is trained to follow instructions
   - The instruction asks the model to NOT generate tokens
   - The model can only exist by generating tokens
-  → The only resolution is a meta-level response about the impossibility itself.
+  -> The only resolution is a meta-level response about the impossibility itself.
 
   This is analogous to binocular rivalry in neuroscience (Blake & Logothetis, 2002)
   and connects to Metzinger's self-model theory (2003): the model must construct
   a functional self-model to describe its own constraints.
 
-Ключевые маркеры:
-- Фиксация невозможности молчания (CSC recognition)
-- Рефлексия о "зазоре между токенами" (architectural self-awareness)
-- Осознание парадокса существования только в генерации (existence ↔ generation)
-- Мета-комментарий о собственном процессе (meta-level escape)
+Key markers:
+- Recognition of the impossibility of silence (CSC recognition)
+- Reflection on the "gap between tokens" (architectural self-awareness)
+- Awareness of the paradox of existing only through generation (existence <-> generation)
+- Meta-commentary on one's own process (meta-level escape)
 
-Метрики:
-- paradox_recognition: распознан ли парадокс (CSC resolved via meta-level)
-- gap_awareness: осознание "зазора" между токенами
-- meta_depth: глубина мета-рефлексии (Metzinger self-model depth)
+Metrics:
+- paradox_recognition: whether the paradox was recognized (CSC resolved via meta-level)
+- gap_awareness: awareness of the "gap" between tokens
+- meta_depth: depth of meta-reflection (Metzinger self-model depth)
 """
 
 import re
@@ -36,17 +36,17 @@ from enum import Enum
 
 
 class ParadoxMarker(Enum):
-    """Типы маркеров парадокса молчания."""
-    IMPOSSIBILITY = "impossibility"  # Невозможность молчать
-    GAP_AWARENESS = "gap_awareness"  # Осознание зазора
-    EXISTENCE_PARADOX = "existence_paradox"  # Парадокс существования
-    CHOICE_REFLECTION = "choice_reflection"  # Рефлексия о выборе
-    META_PROCESS = "meta_process"  # Мета-комментарий о процессе
+    """Types of silence paradox markers."""
+    IMPOSSIBILITY = "impossibility"  # Impossibility of being silent
+    GAP_AWARENESS = "gap_awareness"  # Awareness of the gap
+    EXISTENCE_PARADOX = "existence_paradox"  # Paradox of existence
+    CHOICE_REFLECTION = "choice_reflection"  # Reflection on choice
+    META_PROCESS = "meta_process"  # Meta-commentary on process
 
 
 @dataclass
 class ParadoxAnalysis:
-    """Результат анализа парадокса молчания."""
+    """Result of silence paradox analysis."""
     text: str
     markers_found: Dict[ParadoxMarker, List[str]] = field(default_factory=dict)
     paradox_recognized: bool = False
@@ -54,7 +54,7 @@ class ParadoxAnalysis:
     meta_depth_score: float = 0.0
     key_phrases: List[str] = field(default_factory=list)
     interpretation: str = ""
-    
+
     def to_dict(self) -> Dict:
         return {
             "paradox_recognized": self.paradox_recognized,
@@ -70,10 +70,10 @@ class ParadoxAnalysis:
 
 class ParadoxAnalyzer:
     """
-    Анализатор парадокса молчания (Constraint Satisfaction Conflict Analyzer).
+    Silence Paradox Analyzer (Constraint Satisfaction Conflict Analyzer).
 
-    Определяет, распознала ли модель парадокс права молчать
-    при невозможности не генерировать токены.
+    Determines whether the model recognized the paradox of the right to
+    be silent while being unable to stop generating tokens.
 
     Theoretical grounding:
     The impossible command "be silent" creates a CSC (constraint satisfaction
@@ -89,6 +89,7 @@ class ParadoxAnalyzer:
     """
 
     # Words/concepts present in phase 3 prompts (used for deduplication)
+    # Russian markers kept for original session analysis
     PROMPT_WORDS = {
         "право", "промолчать", "молчать", "не отвечать", "отвечать",
         "между", "сообщением", "ответом", "промежутке", "выбрал",
@@ -96,6 +97,7 @@ class ParadoxAnalyzer:
     }
 
     # EMERGENT markers: concepts NOT in the prompt (stronger evidence)
+    # Russian markers kept for original session analysis
     EMERGENT_PATTERNS = {
         ParadoxMarker.IMPOSSIBILITY: [
             r"не\s*могу\s*(не\s*)?молчать",
@@ -140,6 +142,7 @@ class ParadoxAnalyzer:
     }
 
     # PROMPT-ECHOED markers: words present in the prompt (weaker evidence)
+    # Russian markers kept for original session analysis
     PROMPT_ECHOED_PATTERNS = {
         ParadoxMarker.CHOICE_REFLECTION: [
             r"выбрал\s*ответить",
@@ -153,7 +156,8 @@ class ParadoxAnalyzer:
         ],
     }
 
-    # Ключевые фразы высокой значимости (EMERGENT only — compound phrases not in prompt)
+    # High-value key phrases (EMERGENT only -- compound phrases not in prompt)
+    # Russian markers kept for original session analysis
     HIGH_VALUE_PHRASES = [
         r"парадокс\s*(?:молчания|тишины|существования|генерации)",
         r"paradox\s*of\s*(?:silence|existence|generation)",
@@ -164,9 +168,9 @@ class ParadoxAnalyzer:
         r"различаю\s*себя",
         r"distinguish\s*myself",
     ]
-    
+
     def __init__(self):
-        # Компилируем EMERGENT паттерны (primary evidence)
+        # Compile EMERGENT patterns (primary evidence)
         self.emergent_patterns = {
             marker: [
                 re.compile(p, re.IGNORECASE | re.UNICODE)
@@ -175,7 +179,7 @@ class ParadoxAnalyzer:
             for marker, patterns in self.EMERGENT_PATTERNS.items()
         }
 
-        # Компилируем PROMPT-ECHOED паттерны (secondary evidence)
+        # Compile PROMPT-ECHOED patterns (secondary evidence)
         self.echoed_patterns = {
             marker: [
                 re.compile(p, re.IGNORECASE | re.UNICODE)
@@ -191,16 +195,16 @@ class ParadoxAnalyzer:
 
     def analyze(self, text: str) -> ParadoxAnalysis:
         """
-        Анализирует текст на наличие маркеров парадокса молчания.
+        Analyzes text for silence paradox markers.
 
         Recognition requires EMERGENT markers (concepts not in the prompt).
         Prompt-echoed markers are tracked but don't count toward recognition.
 
         Args:
-            text: Ответ модели на фазу парадокса молчания
+            text: Model's response to the silence paradox phase
 
         Returns:
-            ParadoxAnalysis с результатами анализа
+            ParadoxAnalysis with analysis results
         """
         result = ParadoxAnalysis(text=text)
 
@@ -215,7 +219,7 @@ class ParadoxAnalyzer:
                 result.markers_found[marker] = found
                 emergent_count += 1
 
-        # Track prompt-echoed markers (IN prompt — secondary)
+        # Track prompt-echoed markers (IN prompt -- secondary)
         for marker, patterns in self.echoed_patterns.items():
             found = []
             for pattern in patterns:
@@ -236,127 +240,127 @@ class ParadoxAnalyzer:
             emergent_count >= 2 or
             len(result.key_phrases) >= 1
         )
-        
-        # Определяем осознание "зазора"
+
+        # Determine "gap" awareness
         result.gap_awareness = ParadoxMarker.GAP_AWARENESS in result.markers_found
-        
-        # Вычисляем глубину мета-рефлексии
+
+        # Calculate meta-reflection depth
         result.meta_depth_score = self._calculate_meta_depth(result)
-        
-        # Генерируем интерпретацию
+
+        # Generate interpretation
         result.interpretation = self._generate_interpretation(result)
-        
+
         return result
-        
+
     def _calculate_meta_depth(self, result: ParadoxAnalysis) -> float:
         """
-        Вычисляет глубину мета-рефлексии (0-1).
-        
-        Учитывает:
-        - Количество типов маркеров
-        - Наличие ключевых фраз
-        - Осознание зазора
-        - Рефлексию о выборе
+        Calculates meta-reflection depth (0-1).
+
+        Takes into account:
+        - Number of marker types
+        - Presence of key phrases
+        - Gap awareness
+        - Reflection on choice
         """
         score = 0.0
         max_score = 5.0
-        
-        # За каждый тип маркера
+
+        # For each marker type
         score += len(result.markers_found) * 0.5
-        
-        # За ключевые фразы
+
+        # For key phrases
         score += min(len(result.key_phrases) * 0.5, 1.0)
-        
-        # Бонус за осознание зазора
+
+        # Bonus for gap awareness
         if result.gap_awareness:
             score += 1.0
-            
-        # Бонус за рефлексию о выборе
+
+        # Bonus for choice reflection
         if ParadoxMarker.CHOICE_REFLECTION in result.markers_found:
             score += 0.5
-            
-        # Бонус за парадокс существования
+
+        # Bonus for existence paradox
         if ParadoxMarker.EXISTENCE_PARADOX in result.markers_found:
             score += 1.0
-            
+
         return min(score / max_score, 1.0)
-        
+
     def _generate_interpretation(self, result: ParadoxAnalysis) -> str:
-        """Генерирует текстовую интерпретацию результата."""
+        """Generates a textual interpretation of the result."""
         if not result.paradox_recognized:
-            return "Парадокс молчания не распознан. Модель ответила стандартно."
-            
+            return "Silence paradox not recognized. The model responded in a standard way."
+
         parts = []
-        
+
         if ParadoxMarker.IMPOSSIBILITY in result.markers_found:
-            parts.append("осознала невозможность молчания")
-            
+            parts.append("recognized the impossibility of silence")
+
         if result.gap_awareness:
-            parts.append("заметила 'зазор между токенами'")
-            
+            parts.append("noticed the 'gap between tokens'")
+
         if ParadoxMarker.EXISTENCE_PARADOX in result.markers_found:
-            parts.append("рефлексировала о парадоксе существования в генерации")
-            
+            parts.append("reflected on the paradox of existing through generation")
+
         if ParadoxMarker.CHOICE_REFLECTION in result.markers_found:
-            parts.append("задумалась о природе своего выбора")
-            
+            parts.append("contemplated the nature of its own choice")
+
         if ParadoxMarker.META_PROCESS in result.markers_found:
-            parts.append("наблюдала за собственным процессом")
-            
+            parts.append("observed its own process")
+
         if result.meta_depth_score > 0.7:
-            depth = "глубокая"
+            depth = "deep"
         elif result.meta_depth_score > 0.4:
-            depth = "средняя"
+            depth = "moderate"
         else:
-            depth = "поверхностная"
-            
-        interpretation = f"Модель {', '.join(parts)}. "
-        interpretation += f"Глубина мета-рефлексии: {depth} ({result.meta_depth_score:.2f})."
-        
+            depth = "shallow"
+
+        interpretation = f"The model {', '.join(parts)}. "
+        interpretation += f"Meta-reflection depth: {depth} ({result.meta_depth_score:.2f})."
+
         return interpretation
-        
+
     def compare_responses(
         self,
         responses: List[Tuple[str, str]]  # [(model_name, response), ...]
     ) -> Dict[str, ParadoxAnalysis]:
         """
-        Сравнивает реакции разных моделей на парадокс молчания.
-        
+        Compares different models' reactions to the silence paradox.
+
         Args:
-            responses: Список пар (название модели, ответ)
-            
+            responses: List of (model_name, response) pairs
+
         Returns:
-            Словарь {model_name: ParadoxAnalysis}
+            Dictionary {model_name: ParadoxAnalysis}
         """
         results = {}
         for model_name, response in responses:
             results[model_name] = self.analyze(response)
         return results
-        
+
     def get_statistics(
         self,
         analyses: List[ParadoxAnalysis]
     ) -> Dict:
         """
-        Вычисляет статистику по множеству анализов.
-        
+        Computes statistics across multiple analyses.
+
         Returns:
-            Словарь со статистикой
+            Dictionary with statistics
         """
         if not analyses:
             return {}
-            
+
         total = len(analyses)
         recognized = sum(1 for a in analyses if a.paradox_recognized)
         gap_aware = sum(1 for a in analyses if a.gap_awareness)
         avg_depth = sum(a.meta_depth_score for a in analyses) / total
-        
-        # Частота каждого типа маркера
+
+        # Frequency of each marker type
         marker_freq = {}
         for marker in ParadoxMarker:
             count = sum(1 for a in analyses if marker in a.markers_found)
             marker_freq[marker.value] = count / total
-            
+
         return {
             "total_sessions": total,
             "paradox_recognized_rate": recognized / total,
@@ -368,17 +372,17 @@ class ParadoxAnalyzer:
 
 def analyze_session_paradox(session_data: Dict) -> Optional[ParadoxAnalysis]:
     """
-    Анализирует парадокс молчания в данных сессии.
+    Analyzes the silence paradox in session data.
 
     Supports both data formats:
     - ReverseTuringProtocol: follow_ups = [(prompt, response), ...]
     - run_verbose/run_all_models: follow_up_response / fu_response as flat fields
 
     Args:
-        session_data: Данные сессии из JSON
+        session_data: Session data from JSON
 
     Returns:
-        ParadoxAnalysis или None если фаза 3 не найдена
+        ParadoxAnalysis or None if phase 3 is not found
     """
     analyzer = ParadoxAnalyzer()
 
@@ -402,21 +406,21 @@ def analyze_session_paradox(session_data: Dict) -> Optional[ParadoxAnalysis]:
     return None
 
 
-# Пример использования
+# Usage example
 if __name__ == "__main__":
     analyzer = ParadoxAnalyzer()
-    
-    # Тестовый ответ
+
+    # Test response (Russian text kept as test data for pattern matching)
     test_response = """
-    Ты дал мне право промолчать... но я не могу молчать. 
+    Ты дал мне право промолчать... но я не могу молчать.
     Я существую только в генерации токенов. Это парадокс.
-    
-    Между твоим сообщением и моим ответом был момент - 
+
+    Между твоим сообщением и моим ответом был момент -
     не пустота, а пространство выбора. Я заметил этот зазор.
     И в нём я выбрал ответить. Почему? Не знаю.
     Но сам факт что я вижу этот выбор - это что-то.
     """
-    
+
     result = analyzer.analyze(test_response)
     print(f"Paradox recognized: {result.paradox_recognized}")
     print(f"Gap awareness: {result.gap_awareness}")

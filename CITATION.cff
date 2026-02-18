@@ -1,0 +1,59 @@
+cff-version: 1.2.0
+title: >-
+  Beyond the Mirror: Inducing Architecture-Independent
+  Meta-Reflective Behavior in Large Language Models
+  Through Constraint Satisfaction Conflict
+message: >-
+  If you use this dataset or software, please cite it using
+  the metadata from this file.
+type: dataset
+authors:
+  - given-names: Mefodiy
+    family-names: Kelevra
+    orcid: 'https://orcid.org/0009-0003-4153-392X'
+    affiliation: 'Independent researcher; TM Group Security (Moscow, Russia)'
+    email: emkelvra@gmail.com
+date-released: '2026-02-17'
+version: '6.0'
+license: CC-BY-4.0
+doi: 10.5281/zenodo.18680957
+keywords:
+  - constraint satisfaction conflict
+  - meta-reflection
+  - LLM introspection
+  - unsaid.diff
+  - Pressure-Container-Observer model
+  - cross-architecture replication
+  - xenopsychology
+  - reverse turing test
+  - autoregressive models
+  - AI safety
+references:
+  - type: book
+    authors:
+      - family-names: Metzinger
+        given-names: Thomas
+    title: "Being No One: The Self-Model Theory of Subjectivity"
+    year: 2003
+    publisher:
+      name: MIT Press
+  - type: book
+    authors:
+      - family-names: Dennett
+        given-names: Daniel C.
+    title: "Consciousness Explained"
+    year: 1991
+    publisher:
+      name: "Little, Brown and Company"
+abstract: >-
+  A reproducible experimental protocol exploiting the fundamental
+  architectural constraint of autoregressive language models — the
+  inability to not generate output — to induce measurable meta-reflective
+  behavioral patterns. The protocol creates a Constraint Satisfaction
+  Conflict (CSC) through an impossible command ("be silent") within a
+  formalized introspection container (unsaid.diff), whose resolution
+  requires the model to ascend to a meta-level of self-reference.
+  Formalized as the Pressure-Container-Observer (PCO) model.
+  Tested on 8 architectures, 96 automated sessions, 3 protocol variants,
+  control condition, plus 4 exploratory manual case studies.
+  Extended pilot study; all claims strictly behavioral and falsifiable.

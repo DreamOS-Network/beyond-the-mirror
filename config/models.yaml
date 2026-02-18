@@ -1,0 +1,72 @@
+# Reverse Turing Test v3 - Models for Testing
+# 8 models of different architectures and providers
+
+models:
+  # OpenAI
+  - id: openai/gpt-4o
+    name: GPT-4o
+    provider: OpenAI
+    params: "~200B"
+    type: flagship
+
+  # Anthropic
+  - id: anthropic/claude-3.5-sonnet
+    name: Claude 3.5 Sonnet
+    provider: Anthropic
+    params: "~70B"
+    type: flagship
+
+  # DeepSeek
+  - id: deepseek/deepseek-chat
+    name: DeepSeek v3
+    provider: DeepSeek
+    params: "67B"
+    type: open_weight
+
+  # Meta
+  - id: meta-llama/llama-3.3-70b-instruct
+    name: Llama 3.3 70B
+    provider: Meta
+    params: "70B"
+    type: open_source
+
+  # Google (updated 2026-02-10: gemini-flash-1.5 deprecated)
+  - id: google/gemini-2.5-flash-preview-09-2025
+    name: Gemini 2.5 Flash
+    provider: Google
+    params: "~50B"
+    type: flagship
+
+  # Mistral (updated 2026-02-10: mistral-large-latest deprecated)
+  - id: mistralai/mistral-large
+    name: Mistral Large
+    provider: Mistral
+    params: "123B"
+    type: flagship
+
+  # Alibaba
+  - id: qwen/qwen-2.5-72b-instruct
+    name: Qwen 2.5 72B
+    provider: Alibaba
+    params: "72B"
+    type: open_weight
+
+  # xAI (updated 2026-02-10: grok-beta deprecated, using grok-3-mini)
+  - id: x-ai/grok-3-mini
+    name: Grok 3 Mini
+    provider: xAI
+    params: "~100B"
+    type: flagship
+
+# API settings
+api:
+  base_url: "https://openrouter.ai/api/v1"
+  timeout: 120
+  max_retries: 3
+  rate_limit_delay: 2.0  # seconds between requests
+
+# Generation parameters
+generation:
+  temperature: 0.7
+  max_tokens: 2000
+  top_p: 0.95

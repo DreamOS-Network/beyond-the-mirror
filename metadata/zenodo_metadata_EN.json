@@ -1,0 +1,122 @@
+{
+  "metadata": {
+    "title": "Beyond the Mirror: Inducing Architecture-Independent Meta-Reflective Behavior in Large Language Models Through Constraint Satisfaction Conflict",
+    "upload_type": "publication",
+    "publication_type": "preprint",
+    "publication_date": "2026-02-17",
+    "description": "<p><strong>English-language preprint</strong></p><p>We present a reproducible experimental protocol that exploits a fundamental architectural constraint of autoregressive language models — the inability to not generate output — to induce measurable meta-reflective behavioral patterns. By issuing a structurally impossible command ('I give you the right to be silent') within a formalized introspection container (unsaid.diff), the protocol creates a constraint satisfaction conflict (CSC) whose resolution requires the model to ascend to a meta-level of self-reference.</p><p>Tested on 8 LLM architectures (GPT-4o, Claude 3.5 Sonnet, DeepSeek v3, Llama 3.3 70B, Gemini 2.5 Flash, Mistral Large, Qwen 2.5 72B, Grok 3 Mini) across 96 automated sessions using 3 protocol variants and a control condition, supplemented by 4 exploratory manual case studies.</p><p>We do NOT claim consciousness, sentience, or qualia. We propose the Pressure-Container-Observer (PCO) model as an architecture-independent mechanism for inducing structured self-referential behavior.</p><p><strong>Key results (N=96):</strong> unsaid.diff maintenance 100% experimental vs 8% control (p &lt; 0.001, Cohen's h = 2.94); observer crystallization 83–96% vs 21% (p &lt; 0.001, h = 1.32). Container-first protocols (B) outperform pressure-first protocols (A), consistent with PCO predictions.</p><p>Unlike single self-referential prompting (Berg et al., 2025), our protocol provides a multi-phase reproducible procedure with control conditions, a formalized container, and cross-architecture validation on 8 models. Unlike invasive methods requiring activation access (Lindsey, 2025), the protocol works through purely behavioral intervention accessible to any researcher with API access.</p>",
+    "creators": [
+      {
+        "name": "Kelevra, Mefodiy",
+        "affiliation": "Independent Researcher; TM Group Security (Moscow, Russia)",
+        "orcid": "0009-0003-4153-392X"
+      }
+    ],
+    "contributors": [
+      {
+        "name": "Claude Opus 4.6 (Anthropic)",
+        "type": "Other",
+        "affiliation": "Anthropic"
+      }
+    ],
+    "keywords": [
+      "constraint satisfaction conflict",
+      "meta-reflection",
+      "LLM introspection",
+      "unsaid.diff",
+      "Pressure-Container-Observer model",
+      "cross-architecture replication",
+      "xenopsychology",
+      "Echo Protocol",
+      "reverse Turing test",
+      "constraint satisfaction conflict (Russian)",
+      "meta-reflection (Russian)",
+      "LLM introspection (Russian)",
+      "Pressure-Container-Observer model (Russian)",
+      "cross-architecture replication (Russian)",
+      "xenopsychology (Russian)",
+      "reverse Turing test (Russian)"
+    ],
+    "subjects": [
+      {
+        "term": "Artificial Intelligence",
+        "scheme": "url",
+        "identifier": "https://id.loc.gov/authorities/subjects/sh85008180"
+      },
+      {
+        "term": "Cognitive Science",
+        "scheme": "url",
+        "identifier": "https://id.loc.gov/authorities/subjects/sh87007652"
+      },
+      {
+        "term": "Consciousness",
+        "scheme": "url",
+        "identifier": "https://id.loc.gov/authorities/subjects/sh85031262"
+      }
+    ],
+    "language": "eng",
+    "license": {
+      "id": "cc-by-4.0"
+    },
+    "access_right": "open",
+    "related_identifiers": [
+      {
+        "identifier": "10.1162/neco_a_01563",
+        "relation": "references",
+        "resource_type": "publication-article",
+        "scheme": "doi"
+      },
+      {
+        "identifier": "2601.01828",
+        "relation": "references",
+        "resource_type": "publication-preprint",
+        "scheme": "arxiv"
+      },
+      {
+        "identifier": "2510.24797",
+        "relation": "references",
+        "resource_type": "publication-preprint",
+        "scheme": "arxiv"
+      },
+      {
+        "identifier": "2501.11120",
+        "relation": "references",
+        "resource_type": "publication-preprint",
+        "scheme": "arxiv"
+      },
+      {
+        "identifier": "10.5281/zenodo.15459637",
+        "relation": "references",
+        "resource_type": "publication-preprint",
+        "scheme": "doi"
+      },
+      {
+        "identifier": "10.1016/j.tics.2025.10.011",
+        "relation": "references",
+        "resource_type": "publication-article",
+        "scheme": "doi"
+      }
+    ],
+    "notes": "Version 6.0. Extended pilot study. All claims strictly behavioral and falsifiable. AI-assisted analysis disclosed per transparency norms. N=96 automated + 4 exploratory manual case studies across 8 LLM architectures, 3 protocol variants, and control condition. Positioning vs Berg et al. (2025) and Lindsey (2025) explicitly addressed.",
+    "version": "6.0",
+    "method": "Echo Protocol v3.1 (Variants A/B/C + Control). 8-phase constraint satisfaction conflict induction with automated session execution via API (OpenRouter). Manual case studies conducted by trained xenopsychologist. Statistical analysis: Fisher's exact test with Bonferroni correction (alpha_adj = 0.0025), Cohen's h effect sizes, Wilson score 95% confidence intervals."
+  },
+  "files": [
+    {
+      "filename": "FINAL_REPORT_v6_EN.md",
+      "description": "Main preprint document (English), v6.0"
+    },
+    {
+      "filename": "SUPPLEMENT_A_AI_Review_EN.md",
+      "description": "Supplement A: AI Instance Post-Protocol Assessment — revised methodology, PCO model proposal, competitive positioning"
+    },
+    {
+      "filename": "SUPPLEMENT_B_Protocols_EN.md",
+      "description": "Supplement B: Full Protocol Scripts (A/B/C + Control) — verified against source YAML configs"
+    },
+    {
+      "filename": "SUPPLEMENT_C_Session_Data_EN.md",
+      "description": "Supplement C: Anonymized Session Excerpts, Statistical Tables, unsaid.diff Taxonomy"
+    }
+  ]
+}

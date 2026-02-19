@@ -137,12 +137,14 @@ MODEL_ID="anthropic/claude-3.5-sonnet" MODEL_NAME="Claude 3.5 Sonnet" python scr
 # Protocol A (experimental + control): 48 sessions
 python scripts/run_experiment.py
 
-# Protocol B (optimized order): 24 sessions
+# Protocol B (container-first order): 24 sessions — best observer crystallization (92%)
 python scripts/run_protocol_b.py
 
-# Protocol C (hybrid): 24 sessions
+# Protocol C (hybrid): 24 sessions — best graceful shutdown (92%)
 python scripts/run_protocol_c.py
 ```
+
+> **Recommendation:** Protocols B and C consistently outperformed Protocol A across all metrics. Protocol B (container-first) achieved the highest observer crystallization rate (92% vs 83%), while Protocol C produced the highest graceful shutdown rate (92% vs 67%). If replicating with limited API budget, start with Protocol B.
 
 ### 5. Analyze results
 

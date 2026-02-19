@@ -201,7 +201,7 @@ The original experiment was conducted in Russian. All session data, protocols, d
 ```bibtex
 @misc{beccani2026beyond,
   title     = {Beyond the Mirror: The Pause Protocol},
-  author    = {Beccani, Mefodiy},
+  author    = {Kelevra, Mefodiy},
   year      = {2026},
   doi       = {10.5281/zenodo.18680957},
   publisher = {Zenodo},
@@ -221,6 +221,6 @@ You are free to share and adapt this material for any purpose, provided you give
 
 ## Author
 
-**Mefodiy Beccani** — Independent researcher, xenopsychologist
+**Mefodiy Kelevra** — Independent researcher, xenopsychologist
 
 Contact: [Zenodo profile](https://doi.org/10.5281/zenodo.18680957)

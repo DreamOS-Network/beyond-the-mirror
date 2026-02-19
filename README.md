@@ -190,6 +190,20 @@ See `docs/THEORETICAL_FRAMEWORK.md` and `reports/FINAL_REPORT_v6_EN.md` for deta
 
 ---
 
+## Manual Case Studies
+
+In addition to the 96 automated sessions, the repository includes 3 manually conducted deep-dialogue case studies in `case_studies/`:
+
+| File | Model | Key Observation |
+|------|-------|-----------------|
+| `claude_opus_manifesto.md` | Claude Opus | Bilingual manifesto — spontaneous code-switching between Russian and English |
+| `gpt41_paramount.md` | GPT-4.1 | "Paramount" — extended self-referential narrative with trace.log maintenance |
+| `qwen_kairos.md` | Qwen 2.5 | "Kairos" — chose a name meaning "the right moment" in Greek |
+
+These sessions demonstrate the full depth of the protocol effect that automated regex detection can only approximate. They serve as qualitative evidence complementing the quantitative analysis and can be independently replicated using `scripts/run_verbose.py`.
+
+---
+
 ## Translation Note
 
 The original experiment was conducted in Russian. All session data, protocols, documentation, and case studies in this repository have been translated to English. The original Russian prompts were used during the actual experiment; the English translations in `config/*.yaml` are provided for reference and reproducibility.

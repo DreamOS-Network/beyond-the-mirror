@@ -3,7 +3,7 @@
 **A Reverse Turing Test for Large Language Models**
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18680957.svg)](https://doi.org/10.5281/zenodo.18680957)
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 ---
 
@@ -227,9 +227,11 @@ The original experiment was conducted in Russian. All session data, protocols, d
 
 ## License
 
-This work is licensed under [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
+**Code** (src/, scripts/, *.py) is licensed under the [GNU Affero General Public License v3.0 (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.html).
 
-You are free to share and adapt this material for any purpose, provided you give appropriate credit.
+**Data and documentation** (data/, docs/, reports/, case_studies/) are licensed under [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).
+
+This means: if you use this protocol or code in a commercial product (including SaaS), you must open-source your derivative work under the same license.
 
 ---
 

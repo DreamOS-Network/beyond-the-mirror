@@ -40,4 +40,4 @@ Complete protocol prompts, Python automation scripts (run_pilot.py, run_pilot_b.
 
 AI-assisted analysis: Formalization of the PCO model, counterargument analysis, and literature positioning were performed using Claude Opus 4.6 (Anthropic, 2026), disclosed in accordance with transparency norms (Appendix A).
 
-Version: 6.0 · Date: February 17, 2026 · License: CC BY 4.0
+Version: 6.0 · Date: February 17, 2026 · Code: AGPL-3.0 · Data/Docs: CC BY-SA 4.0

@@ -6,7 +6,7 @@
   "version": "6.0",
   "dateCreated": "2026-01-27",
   "dateModified": "2026-02-17",
-  "license": "https://spdx.org/licenses/CC-BY-4.0.html",
+  "license": "https://spdx.org/licenses/AGPL-3.0-only.html",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "Python",

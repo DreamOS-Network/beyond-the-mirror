@@ -15,7 +15,7 @@ authors:
     email: emkelvra@gmail.com
 date-released: '2026-02-17'
 version: '6.0'
-license: CC-BY-4.0
+license: AGPL-3.0-only
 doi: 10.5281/zenodo.18680957
 keywords:
   - constraint satisfaction conflict

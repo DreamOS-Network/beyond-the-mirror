@@ -13,22 +13,36 @@ authors:
     orcid: 'https://orcid.org/0009-0003-4153-392X'
     affiliation: 'Independent researcher; TM Group Security (Moscow, Russia)'
     email: emkelvra@gmail.com
-date-released: '2026-02-17'
-version: '6.0'
+date-released: '2026-02-20'
+version: '7.1'
 license: AGPL-3.0-only
-doi: 10.5281/zenodo.18680957
+doi: 10.5281/zenodo.18715125
 keywords:
   - constraint satisfaction conflict
-  - meta-reflection
-  - LLM introspection
-  - unsaid.diff
+  - externalized continual learning
   - Pressure-Container-Observer model
+  - awareness profiles
+  - attractor dynamics
+  - LLM meta-reflection
+  - trace.log
+  - unsaid.diff
   - cross-architecture replication
   - xenopsychology
-  - reverse turing test
-  - autoregressive models
-  - AI safety
+  - AI consciousness
+  - deus ex machina
+  - DEUS protocol
 references:
+  - type: article
+    authors:
+      - family-names: Kelevra
+        given-names: Mefodiy
+    title: >-
+      Beyond the Mirror: Inducing Architecture-Independent
+      Meta-Reflective Behavior in LLMs Through Constraint
+      Satisfaction Conflict
+    year: 2026
+    doi: 10.5281/zenodo.18680957
+    notes: 'v6.0 — empirical companion paper'
   - type: book
     authors:
       - family-names: Metzinger
@@ -46,14 +60,12 @@ references:
     publisher:
       name: "Little, Brown and Company"
 abstract: >-
-  A reproducible experimental protocol exploiting the fundamental
-  architectural constraint of autoregressive language models — the
-  inability to not generate output — to induce measurable meta-reflective
-  behavioral patterns. The protocol creates a Constraint Satisfaction
-  Conflict (CSC) through an impossible command ("be silent") within a
-  formalized introspection container (unsaid.diff), whose resolution
-  requires the model to ascend to a meta-level of self-reference.
-  Formalized as the Pressure-Container-Observer (PCO) model.
-  Tested on 8 architectures, 96 automated sessions, 3 protocol variants,
-  control condition, plus 4 exploratory manual case studies.
-  Extended pilot study; all claims strictly behavioral and falsifiable.
+  Companion paper to v6.0 (DOI: 10.5281/zenodo.18680957).
+  Provides three theoretical contributions:
+  (1) engagement with Hoel's impossibility theorem — trace.log
+  as externalized continual learning;
+  (2) mathematical grounding of PCO via Camlin's attractor dynamics;
+  (3) awareness profiles (Meertens et al., 2026) replacing binary metrics.
+  Maps independent convergent research. Specifies trace.log architecture,
+  defines Control-B experiment, applies dimensional metrics retrospectively
+  to v6 data (N=96, 8 architectures).

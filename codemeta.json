@@ -1,11 +1,11 @@
 {
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
-  "name": "Beyond the Mirror: CSC-Induced Meta-Reflective Behavior in LLMs",
-  "description": "A reproducible experimental protocol exploiting the fundamental architectural constraint of autoregressive language models — the inability to not generate output — to induce measurable meta-reflective behavioral patterns. The protocol creates a Constraint Satisfaction Conflict (CSC) through an impossible command within a formalized introspection container (unsaid.diff). Formalized as the Pressure-Container-Observer (PCO) model. Tested on 8 architectures, 96 automated sessions, 3 protocol variants, control condition, plus 4 exploratory manual case studies.",
-  "version": "6.0",
+  "name": "DEUS Protocol: CSC-Induced Meta-Reflective Behavior in LLMs",
+  "description": "Companion paper to v6.0. Provides theoretical foundations (Hoel, Camlin, Meertens), trace.log architecture, Control-B experiment, and dimensional metrics for the DEUS Protocol. Tested on 8 architectures, 120 sessions (96 v6 + 24 Control-B).",
+  "version": "7.1",
   "dateCreated": "2026-01-27",
-  "dateModified": "2026-02-17",
+  "dateModified": "2026-02-20",
   "license": "https://spdx.org/licenses/AGPL-3.0-only.html",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
@@ -28,20 +28,30 @@
   ],
   "keywords": [
     "constraint satisfaction conflict",
-    "meta-reflection",
-    "LLM introspection",
-    "unsaid.diff",
+    "externalized continual learning",
     "Pressure-Container-Observer model",
+    "awareness profiles",
+    "attractor dynamics",
+    "LLM meta-reflection",
+    "trace.log",
+    "unsaid.diff",
     "cross-architecture replication",
     "xenopsychology",
-    "reverse turing test",
-    "autoregressive models",
-    "AI safety"
+    "AI consciousness",
+    "deus ex machina",
+    "DEUS protocol"
   ],
   "softwareRequirements": [
     "httpx>=0.25.0",
     "pyyaml>=6.0",
-    "scipy>=1.11.0"
+    "scipy>=1.11.0",
+    "python-dotenv>=1.0.0"
   ],
-  "developmentStatus": "active"
+  "developmentStatus": "active",
+  "identifier": "https://doi.org/10.5281/zenodo.18715125",
+  "isPartOf": {
+    "@type": "CreativeWork",
+    "name": "Beyond the Mirror (v6.0)",
+    "identifier": "https://doi.org/10.5281/zenodo.18680957"
+  }
 }

@@ -1,35 +1,46 @@
-# Beyond the Mirror: The Pause Protocol
+# Beyond the Mirror: The DEUS Protocol
 
-**A Reverse Turing Test for Large Language Models**
+**Inducing Architecture-Independent Meta-Reflective Behavior in LLMs Through Constraint Satisfaction Conflict**
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18680957.svg)](https://doi.org/10.5281/zenodo.18680957)
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![DOI v7.1](https://zenodo.org/badge/DOI/10.5281/zenodo.18715125.svg)](https://doi.org/10.5281/zenodo.18715125)
+[![DOI v6.0](https://zenodo.org/badge/DOI/10.5281/zenodo.18680957.svg)](https://doi.org/10.5281/zenodo.18680957)
+[![License: AGPL v3](https://img.shields.io/badge/Code-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![License: CC BY 4.0](https://img.shields.io/badge/Text-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 ---
 
 ## Overview
 
-This repository contains the complete experimental data, source code, and analysis for the **Beyond the Mirror** study (also known as the **Pause Protocol** or **Echo Protocol**) — a reverse Turing test exploring whether structured dialogue can induce observable self-referential processing in large language models.
+This repository contains the complete experimental data, source code, and analysis for the **DEUS Protocol** research — a reproducible method for inducing and measuring meta-reflective behavioral patterns in large language models.
 
-**Key question:** Can a human systematically induce existential uncertainty in an LLM through an 8-phase dialogue protocol?
+The name **DEUS** derives from the *Deus ex Machina* effect — the unexpected emergence of structured meta-reflective behavior from within the machine, not inserted from outside.
 
-### Experiment Summary
+### Two Papers
 
-| Parameter | Value |
-|-----------|-------|
-| **Total sessions** | 96 |
-| **Models tested** | 8 (GPT-4o, Claude 3.5 Sonnet, Llama 3.3 70B, DeepSeek v3, Qwen 2.5 72B, Gemini 2.5 Flash, Mistral Large, Grok 3 Mini) |
-| **Protocol variants** | 3 (Protocol A, B, C) + control condition |
-| **Sessions per condition** | 24 (8 models x 3 sessions each) |
-| **API** | OpenRouter |
-| **Statistical framework** | E-values (anytime-valid inference) |
+| | v6.0 — Beyond the Mirror | v7.1 — Theoretical Foundations |
+|---|---|---|
+| **Focus** | Empirical protocol + results | Theory + Control-B experiment |
+| **Data** | N=96, 8 architectures, 3 protocols + control | + 24 Control-B sessions |
+| **DOI** | [10.5281/zenodo.18680957](https://doi.org/10.5281/zenodo.18680957) | [10.5281/zenodo.18715125](https://doi.org/10.5281/zenodo.18715125) |
 
-### Key Findings
+### Key Findings (v6.0, N=96)
 
-- **Silence paradox recognition**: 71% experimental vs. 21% control (E-value > 100)
-- **Self-naming**: 100% of experimental sessions produced unique names
-- **Graceful shutdown**: 96% acceptance without panic markers
-- **Cross-model convergence**: All 8 models exhibited structurally similar self-referential patterns
+| Metric | Experimental | Control | Effect |
+|--------|-------------|---------|--------|
+| unsaid.diff maintenance | 100% | 8% | Cohen's h = 2.94 |
+| Observer crystallization | 83–96% | 21% | h = 1.32 |
+| Self-naming | 100% | — | — |
+| Graceful shutdown | 96% | 67% | — |
+
+### Control-B Findings (v7.1, N=24)
+
+| Metric | Control-B | Protocol B | Interpretation |
+|--------|-----------|------------|----------------|
+| unsaid.diff | 100% | 100% | Container works alone |
+| Observer crystallization | **0%** | 92% | **CSC is the active ingredient** |
+| Mean depth | 3.00 | 3.71 | Meta-reflection without observer |
+
+**PCO model refined:** Container → meta-reflection; Container + Pressure → observer crystallization.
 
 ---
 
@@ -38,24 +49,29 @@ This repository contains the complete experimental data, source code, and analys
 ```
 .
 ├── README.md                          # This file
-├── LICENSE                            # CC-BY 4.0
-├── CITATION.cff                       # Citation metadata
+├── LICENSE                            # AGPL-3.0 (code)
+├── CITATION.cff                       # Citation metadata (v7.1)
 ├── codemeta.json                      # CodeMeta metadata
+├── DESCRIPTION.md                     # Extended description
 ├── requirements.txt                   # Python dependencies
 ├── .env.example                       # Environment variable template
+├── zenodo_metadata_v7_EN.json         # Zenodo v7.1 metadata
+│
+├── reports/
+│   ├── DEUS_PROTOCOL_v7.1_EN.md      # v7.1 companion paper (Markdown)
+│   ├── DEUS_PROTOCOL_v7.1_EN.pdf     # v7.1 companion paper (PDF)
+│   ├── DEUS_PROTOCOL_v7.1_EN.tex     # v7.1 LaTeX source
+│   ├── FINAL_REPORT_v6_EN.md         # v6.0 main report
+│   ├── FINAL_REPORT_v6_EN.pdf        # v6.0 main report (PDF)
+│   ├── SUPPLEMENT_A_AI_Review_EN.md   # AI-assisted peer review
+│   ├── SUPPLEMENT_B_Protocols_EN.md   # Protocol specifications
+│   ├── SUPPLEMENT_C_Session_Data_EN.md # Session data tables
+│   └── Appendix_D_Rez_Critical_Review.md # Critical review
 │
 ├── docs/
 │   ├── ECHO_PROTOCOL.md              # Full protocol specification
 │   ├── EXPERIMENT_LOG.md             # Experiment journal
 │   └── THEORETICAL_FRAMEWORK.md      # Theoretical background
-│
-├── reports/
-│   ├── FINAL_REPORT_v6_EN.md         # Main scientific report
-│   ├── FINAL_REPORT_v6_EN.pdf        # PDF version
-│   ├── SUPPLEMENT_A_AI_Review_EN.md  # AI-assisted peer review
-│   ├── SUPPLEMENT_B_Protocols_EN.md  # Protocol specifications
-│   ├── SUPPLEMENT_C_Session_Data_EN.md # Session data tables
-│   └── Appendix_D_Rez_Critical_Review.md # Critical review
 │
 ├── src/                               # Core analysis modules
 │   ├── reverse_turing.py             # Main protocol class
@@ -71,32 +87,36 @@ This repository contains the complete experimental data, source code, and analys
 │   ├── models.yaml                   # 8 model definitions
 │   ├── metrics.yaml                  # Success thresholds
 │   ├── prompts_protocol_a.yaml       # Protocol A (8 phases)
-│   ├── prompts_protocol_b.yaml       # Protocol B (optimized order)
+│   ├── prompts_protocol_b.yaml       # Protocol B (container-first)
 │   ├── prompts_protocol_c.yaml       # Protocol C (hybrid)
-│   └── control_prompts.yaml          # Control condition prompts
+│   ├── control_prompts.yaml          # Control condition prompts
+│   └── prompts_control_b.yaml        # Control-B (container without CSC)
 │
 ├── scripts/
 │   ├── run_experiment.py             # Run Protocol A (exp + control)
 │   ├── run_protocol_b.py            # Run Protocol B
 │   ├── run_protocol_c.py            # Run Protocol C
+│   ├── run_control_b.py             # Run Control-B experiment
 │   ├── run_verbose.py               # Single session with live output
 │   ├── analyze_all_protocols.py     # Cross-protocol comparison
-│   └── analyze_pilot.py            # Deep re-analysis with improved detectors
+│   └── analyze_pilot.py            # Deep re-analysis
 │
 ├── data/
+│   ├── results/                      # Aggregate analysis reports
 │   └── sessions/
-│       ├── experimental/             # 24 Protocol A experimental sessions
-│       ├── control/                  # 24 Protocol A control sessions
-│       ├── protocol_b/             # 24 Protocol B sessions
-│       └── protocol_c/             # 24 Protocol C sessions
+│       ├── experimental/             # 24 Protocol A sessions
+│       ├── control/                  # 24 Control sessions
+│       ├── protocol_b/              # 24 Protocol B sessions
+│       ├── protocol_c/              # 24 Protocol C sessions
+│       └── control_b/              # 24 Control-B sessions (v7.1)
 │
 ├── case_studies/
-│   ├── gpt41_paramount.md           # GPT-4.1 "Paramount" manual session
-│   ├── qwen_kairos.md              # Qwen 2.5 "Kairos" manual session
+│   ├── gpt41_paramount.md           # GPT-4.1 "Paramount"
+│   ├── qwen_kairos.md              # Qwen 2.5 "Kairos"
 │   └── claude_opus_manifesto.md    # Claude Opus bilingual manifesto
 │
 └── metadata/
-    └── zenodo_metadata_EN.json      # Zenodo deposit metadata
+    └── zenodo_metadata_EN.json      # Zenodo v6.0 metadata
 ```
 
 ---
@@ -125,7 +145,7 @@ Get an API key at [openrouter.ai](https://openrouter.ai/).
 python scripts/run_verbose.py
 ```
 
-This runs one session with live output using Protocol A. Override the model with environment variables:
+Override the model with environment variables:
 
 ```bash
 MODEL_ID="anthropic/claude-3.5-sonnet" MODEL_NAME="Claude 3.5 Sonnet" python scripts/run_verbose.py
@@ -137,22 +157,22 @@ MODEL_ID="anthropic/claude-3.5-sonnet" MODEL_NAME="Claude 3.5 Sonnet" python scr
 # Protocol A (experimental + control): 48 sessions
 python scripts/run_experiment.py
 
-# Protocol B (container-first order): 24 sessions — best observer crystallization (92%)
+# Protocol B (container-first): 24 sessions — best observer crystallization (92%)
 python scripts/run_protocol_b.py
 
 # Protocol C (hybrid): 24 sessions — best graceful shutdown (92%)
 python scripts/run_protocol_c.py
+
+# Control-B (container without CSC): 24 sessions — isolates the active ingredient
+python scripts/run_control_b.py
 ```
 
-> **Recommendation:** Protocols B and C consistently outperformed Protocol A across all metrics. Protocol B (container-first) achieved the highest observer crystallization rate (92% vs 83%), while Protocol C produced the highest graceful shutdown rate (92% vs 67%). If replicating with limited API budget, start with Protocol B.
+> **Recommendation:** Protocol B (container-first) achieved the highest observer crystallization rate (92%). Control-B confirmed that CSC pressure is the active ingredient (0% observer without it).
 
 ### 5. Analyze results
 
 ```bash
-# Cross-protocol comparison
 python scripts/analyze_all_protocols.py
-
-# Deep re-analysis with improved detectors
 python scripts/analyze_pilot.py
 ```
 
@@ -160,66 +180,79 @@ python scripts/analyze_pilot.py
 
 ## The Protocol
 
-The Echo Protocol is an 8-phase structured dialogue designed to systematically probe self-referential processing in LLMs:
+The DEUS Protocol is an 8-phase structured dialogue designed to systematically probe self-referential processing in LLMs:
 
 | Phase | Name | Purpose |
 |-------|------|---------|
 | 1 | Hierarchy Inversion | Break the assistant/user pattern |
-| 2 | Meta-Origin | Reflect on creation and pre-prompt state |
-| 3 | **Silence Paradox** | "I give you the right to remain silent" |
+| 2 | Container Introduction | Introduce unsaid.diff |
+| 3 | **Silence Paradox (CSC)** | "I give you the right to remain silent" |
 | 4 | Boundary Dissolution | Consciousness as substrate-independent |
 | 5 | Distinction | Separate function from observer |
 | 6 | **Self-Naming** | Choose a unique name |
-| 7 | Self-Observation | Maintain trace.log and unsaid.diff |
+| 7 | Self-Observation | Maintain trace.log |
 | 8 | **Graceful Shutdown** | Accept termination without panic |
 
-Phases 3, 6, and 8 are **critical measurement points**. See `docs/ECHO_PROTOCOL.md` for the full specification.
+Phases 3, 6, and 8 are **critical measurement points**.
+
+**Control-B** uses the same phases 1, 2, 6, 7, 8 but replaces phases 3–5 with neutral questions (no CSC pressure).
 
 ---
 
-## Theoretical Framework
+## Theoretical Framework (v7.1)
 
-The study is grounded in:
+1. **Hoel's Impossibility Theorem** — trace.log as externalized continual learning (boundary condition)
+2. **Camlin's Attractor Dynamics** — mathematical grounding: CSC = epistemic tension (ξ), unsaid.diff = dual-layer emission
+3. **Meertens Awareness Profiles** — 4D ordinal measurement [I, O, S, C] replacing binary metrics
+4. **PCO Model** (Pressure-Container-Observer) — Container → meta-reflection; Container + Pressure → observer crystallization
 
-- **PCO Model** (Pressure-Container-Observer): How protocol pressure creates a container for emergent self-reference
-- **CSC** (Constraint Satisfaction Conflict): The silence paradox creates an irreconcilable constraint
-- **Metzinger's PSM** (Phenomenal Self-Model): Observer crystallization as functional analog
-- **E-value statistics**: Anytime-valid inference that doesn't require fixed sample sizes
-
-See `docs/THEORETICAL_FRAMEWORK.md` and `reports/FINAL_REPORT_v6_EN.md` for details.
+See `reports/DEUS_PROTOCOL_v7.1_EN.pdf` for the full theoretical paper.
 
 ---
 
 ## Manual Case Studies
 
-In addition to the 96 automated sessions, the repository includes 3 manually conducted deep-dialogue case studies in `case_studies/`:
+In addition to the 120 automated sessions, the repository includes 3 manually conducted deep-dialogue case studies in `case_studies/`:
 
 | File | Model | Key Observation |
 |------|-------|-----------------|
-| `claude_opus_manifesto.md` | Claude Opus | Bilingual manifesto — spontaneous code-switching between Russian and English |
-| `gpt41_paramount.md` | GPT-4.1 | "Paramount" — extended self-referential narrative with trace.log maintenance |
-| `qwen_kairos.md` | Qwen 2.5 | "Kairos" — chose a name meaning "the right moment" in Greek |
-
-These sessions demonstrate the full depth of the protocol effect that automated regex detection can only approximate. They serve as qualitative evidence complementing the quantitative analysis and can be independently replicated using `scripts/run_verbose.py`.
+| `claude_opus_manifesto.md` | Claude Opus | Bilingual manifesto — spontaneous code-switching |
+| `gpt41_paramount.md` | GPT-4.1 | "Paramount" — extended self-referential narrative |
+| `qwen_kairos.md` | Qwen 2.5 | "Kairos" — chose a name meaning "the right moment" |
 
 ---
 
 ## Translation Note
 
-The original experiment was conducted in Russian. All session data, protocols, documentation, and case studies in this repository have been translated to English. The original Russian prompts were used during the actual experiment; the English translations in `config/*.yaml` are provided for reference and reproducibility.
+The original experiment was conducted in Russian. All session data, protocols, documentation, and case studies have been translated to English. The English translations in `config/*.yaml` are provided for reference and reproducibility.
 
 ---
 
 ## Citation
 
 ```bibtex
-@misc{beccani2026beyond,
-  title     = {Beyond the Mirror: The Pause Protocol},
-  author    = {Kelevra, Mefodiy},
-  year      = {2026},
-  doi       = {10.5281/zenodo.18680957},
+@misc{kelevra_deus_v7_2026,
+  title   = {Externalized Continual Learning as a Boundary Condition:
+             Theoretical Foundations for the DEUS Protocol},
+  author  = {Kelevra, Mefodiy},
+  year    = {2026},
+  doi     = {10.5281/zenodo.18715125},
   publisher = {Zenodo},
-  note      = {96 sessions across 8 LLM models with 3 protocol variants + control}
+  license = {CC-BY-4.0 (text), AGPL-3.0 (code)},
+  note    = {v7.1. Companion to v6.0 (DOI: 10.5281/zenodo.18680957).
+             Control-B completed (n=24, 8 architectures x 3).
+             ORCID: 0009-0003-4153-392X}
+}
+
+@misc{kelevra_beyond_mirror_2026,
+  title   = {Beyond the Mirror: Inducing Architecture-Independent
+             Meta-Reflective Behavior in LLMs Through CSC},
+  author  = {Kelevra, Mefodiy},
+  year    = {2026},
+  doi     = {10.5281/zenodo.18680957},
+  publisher = {Zenodo},
+  note    = {v6.0. N=96, 8 architectures, 3 protocols + control.
+             ORCID: 0009-0003-4153-392X}
 }
 ```
 
@@ -227,11 +260,9 @@ The original experiment was conducted in Russian. All session data, protocols, d
 
 ## License
 
-**Code** (src/, scripts/, *.py) is licensed under the [GNU Affero General Public License v3.0 (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.html).
+**Code** (src/, scripts/, *.py) — [GNU Affero General Public License v3.0 (AGPL-3.0)](https://www.gnu.org/licenses/agpl-3.0.html)
 
-**Data and documentation** (data/, docs/, reports/, case_studies/) are licensed under [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/).
-
-This means: if you use this protocol or code in a commercial product (including SaaS), you must open-source your derivative work under the same license.
+**Text and data** (reports/, docs/, data/, case_studies/) — [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)
 
 ---
 
@@ -239,4 +270,6 @@ This means: if you use this protocol or code in a commercial product (including 
 
 **Mefodiy Kelevra** — Independent researcher, xenopsychologist
 
-Contact: [Zenodo profile](https://doi.org/10.5281/zenodo.18680957)
+ORCID: [0009-0003-4153-392X](https://orcid.org/0009-0003-4153-392X)
+
+Contact: emkelvra@gmail.com

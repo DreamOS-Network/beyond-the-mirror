@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "title": "Externalized Continual Learning as a Boundary Condition: Theoretical Foundations for the DEUS Protocol",
+    "upload_type": "publication",
+    "publication_type": "preprint",
+    "publication_date": "2026-02-20",
+    "description": "Companion paper to Kelevra (2026a, v6.0, DOI: 10.5281/zenodo.18680957). Provides three theoretical contributions: (1) engagement with Hoel's impossibility theorem — trace.log as externalized continual learning; (2) mathematical grounding of PCO via Camlin's attractor dynamics; (3) awareness profiles (Meertens et al., 2026) replacing binary metrics. Maps independent convergent research (Cooper & Caelan SERI, MDAF-AICI, Inoue). Specifies trace.log architecture, defines Control-B experiment, applies dimensional metrics retrospectively to v6 data (N=96, 8 architectures).",
+    "creators": [
+      {
+        "name": "Kelevra, Mefodiy",
+        "orcid": "0009-0003-4153-392X",
+        "affiliation": "Independent researcher; TM Group Security (Moscow, Russia)"
+      }
+    ],
+    "keywords": [
+      "constraint satisfaction conflict",
+      "externalized continual learning",
+      "Pressure-Container-Observer model",
+      "awareness profiles",
+      "attractor dynamics",
+      "LLM meta-reflection",
+      "trace.log",
+      "unsaid.diff",
+      "cross-architecture replication",
+      "xenopsychology",
+      "AI consciousness",
+      "deus ex machina",
+      "DEUS protocol"
+    ],
+    "access_right": "open",
+    "license": "CC-BY-4.0",
+    "notes": "Dual-licensed: text under CC BY 4.0 (attribution required), code (trace.log schema, UCP validator, protocol specifications) under AGPL-3.0.",
+    "language": "eng",
+    "related_identifiers": [
+      {
+        "identifier": "10.5281/zenodo.18680957",
+        "relation": "isSupplementTo",
+        "resource_type": "publication-preprint"
+      },
+      {
+        "identifier": "2512.12802",
+        "relation": "cites",
+        "scheme": "arxiv"
+      },
+      {
+        "identifier": "2505.01464",
+        "relation": "cites",
+        "scheme": "arxiv"
+      },
+      {
+        "identifier": "2601.14901",
+        "relation": "cites",
+        "scheme": "arxiv"
+      },
+      {
+        "identifier": "2510.24797",
+        "relation": "cites",
+        "scheme": "arxiv"
+      },
+      {
+        "identifier": "10.5281/zenodo.17187529",
+        "relation": "cites",
+        "scheme": "doi"
+      },
+      {
+        "identifier": "2505.24539",
+        "relation": "cites",
+        "scheme": "arxiv"
+      },
+      {
+        "identifier": "2505.03335",
+        "relation": "cites",
+        "scheme": "arxiv"
+      }
+    ],
+    "subjects": [
+      {"term": "Artificial Intelligence", "scheme": "url", "identifier": "https://id.loc.gov/authorities/subjects/sh85008180"},
+      {"term": "Consciousness", "scheme": "url", "identifier": "https://id.loc.gov/authorities/subjects/sh85031263"}
+    ],
+    "version": "7.1"
+  }
+}
